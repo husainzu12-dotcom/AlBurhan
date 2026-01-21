@@ -1,0 +1,32 @@
+{
+  "name": "business-portfolio",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/husainzu12-dotcom/AlBurhan.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/husainzu12-dotcom/AlBurhan/issues"
+  },
+  "homepage": "https://github.com/husainzu12-dotcom/AlBurhan#readme",
+  "dependencies": {
+    "@supabase/supabase-js": "^2.91.0",
+    "bcryptjs": "^3.0.3",
+    "connect-sqlite3": "^0.9.16",
+    "dotenv": "^17.2.3",
+    "ejs": "^4.0.1",
+    "express": "^5.2.1",
+    "express-session": "^1.18.2",
+    "sqlite3": "^5.1.7"
+  }
+}

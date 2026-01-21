@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Al-Burhan Industrial Drives</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h1>AL-BURHAN INDUSTRIAL DRIVES</h1>
+                <p class="tagline">40+ Years of Trusted Quality</p>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/about">About</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="/blog">Blog</a></li>
+                <li><a href="/contact">Contact</a></li>
+                <li><a href="/cart" class="active">Cart</a></li>
+                <% if (user && user.role === 'admin') { %>
+                <li><a href="/admin">Admin</a></li>
+                <% } %>
+                <% if (user) { %>
+                <li><a href="/logout">Logout</a></li>
+                <% } else { %>
+                <li><a href="/login">Login</a></li>
+                <% } %>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Page Content -->
+    <div class="cart-page">
+        <div class="container">
+            <h1 class="section-title">Shopping Cart</h1>
+            <% if (!cart || cart.length === 0) { %>
+                <p>Your cart is empty.</p>
+                <a href="/products" class="btn">Continue Shopping</a>
+            <% } else { %>
+                <table class="cart-table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% let total = 0; %>
+                        <% cart.forEach(item => { %>
+                            <% 
+                            // Find product name (assuming we have products array or fetch)
+                            const product = products.find(p => p.id == item.productId);
+                            const itemTotal = (product ? product.price : 0) * item.quantity;
+                            total += itemTotal;
+                            %>
+                        <tr>
+                            <td><%= product ? product.name : 'Unknown Product' %></td>
+                            <td><%= item.quantity %></td>
+                            <td>₹<%= product ? product.price : 0 %></td>
+                            <td>₹<%= itemTotal.toFixed(2) %></td>
+                            <td>
+                                <form action="/remove-from-cart" method="POST" style="display: inline;">
+                                    <input type="hidden" name="productId" value="<%= item.productId %>">
+                                    <button type="submit" class="btn">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }); %>
+                    </tbody>
+                </table>
+                <div class="cart-total">
+                    <h3>Total: ₹<%= total.toFixed(2) %></h3>
+                </div>
+                <div class="cart-actions">
+                    <a href="/products" class="btn">Continue Shopping</a>
+                    <form action="/checkout" method="POST" style="display: inline;">
+                        <button type="submit" class="btn">Checkout</button>
+                    </form>
+                </div>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>Al-Burhan Industrial Drives</h3>
+                    <p>40+ Years of Trusted Quality in Power Transmission Equipment</p>
+                </div>
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/about">About Us</a></li>
+                        <li><a href="/products">Products</a></li>
+                        <li><a href="/contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <p>109/111 Nagdevi Street<br>Mumbai – 400003</p>
+                    <p>Phone: <a href="tel:+919819036787">+91 9819036787</a></p>
+                    <p>Email: <a href="mailto:alburhanind.drives@gmail.com">alburhanind.drives@gmail.com</a></p>
+                </div>
+                <div class="footer-col">
+                    <h4>GSTIN</h4>
+                    <p>27AAIPU5490Q1ZM</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Al-Burhan Industrial Drives. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
